@@ -13,6 +13,8 @@ import {
   GridToolbarContainer,
   GridActionsCellItem,
   GridRowEditStopReasons,
+  useGridApiContext,
+  GridColDef,  
   esES,
 } from '@mui/x-data-grid';
 import {
@@ -26,6 +28,8 @@ const roles = ['Market', 'Finance', 'Development'];
 const randomRole = () => {
   return randomArrayItem(roles);
 };
+
+
 
 const initialRows = [
   // {
@@ -76,12 +80,12 @@ function EditToolbar(props) {
       fecha_factura_tasadora: '',
       referencia: '',
       tipo_factura: 'U',
-      ingreso_tasadora_neto_factura: 0,
+      ingreso_tasadora_neto_factura: '',
       isNew: true
     }]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
-      [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
+      [id]: { mode: GridRowModes.Edit, fieldToFocus: 'numero_factura_tasadora' },
     }));
   };
 
@@ -109,6 +113,9 @@ export default function FullFeaturedCrudGrid() {
   };
 
   const handleSaveClick = (id) => () => {
+    //debugger;
+
+
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
   };
 
@@ -138,8 +145,18 @@ export default function FullFeaturedCrudGrid() {
     setRowModesModel(newRowModesModel);
   };
 
-  const columns = [
-    { field: 'numero_factura_tasadora', headerName: 'Factura', width: 120, editable: true },
+  
+
+  const columns = [    
+     { field: 'numero_factura_tasadora', headerName: 'Factura', width: 120, editable: true
+    ,    
+    preProcessEditCellProps(params) {      
+      //debugger;
+      const invalid = params.props.value.length < 1;    
+      return { ...params.props, error: invalid }    
+    }
+  
+  },
     {
       field: 'fecha_factura_tasadora',
       headerName: 'Fecha',
@@ -150,8 +167,21 @@ export default function FullFeaturedCrudGrid() {
       editable: true,
       valueFormatter: params =>
         moment(params?.value).format("DD/MM/YYYY"),
+        preProcessEditCellProps(params) {      
+          //debugger;
+          const invalid = params.props.value === null || params.props.value === 'undefined' || params.props.value === 'Invalid date';    
+          return { ...params.props, error: invalid }    
+        }
+
     },
-    { field: 'referencia', headerName: 'Referencia', width: 120, editable: true },
+    { field: 'referencia', headerName: 'Referencia', width: 120, editable: true, 
+    preProcessEditCellProps(params) {      
+      //debugger;
+      const invalid = params.props.value.length < 1;    
+      return { ...params.props, error: invalid }    
+    }
+
+  },
     { field: 'tipo_factura', headerName: 'Tipo', width: 25, editable: true },
     { field: 'ingreso_tasadora_neto_factura', headerName: 'Ingreso neto', type: 'number', align: 'right', width: 110, editable: true },
 
