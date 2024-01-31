@@ -12,9 +12,7 @@ import {
   DataGrid,
   GridToolbarContainer,
   GridActionsCellItem,
-  GridRowEditStopReasons,
-  useGridApiContext,
-  GridColDef,  
+  GridRowEditStopReasons,  
   esES,
 } from '@mui/x-data-grid';
 import {
@@ -31,42 +29,7 @@ const randomRole = () => {
 
 
 
-const initialRows = [
-  // {
-  //   id: randomId(),
-  //   name: randomTraderName(),
-  //   age: 25,
-  //   joinDate: randomCreatedDate(),
-  //   role: randomRole(),
-  // },
-  // {
-  //   id: randomId(),
-  //   name: randomTraderName(),
-  //   age: 36,
-  //   joinDate: randomCreatedDate(),
-  //   role: randomRole(),
-  // },
-  // {
-  //   id: randomId(),
-  //   name: randomTraderName(),
-  //   age: 19,
-  //   joinDate: randomCreatedDate(),
-  //   role: randomRole(),
-  // },
-  // {
-  //   id: randomId(),
-  //   name: randomTraderName(),
-  //   age: 28,
-  //   joinDate: randomCreatedDate(),
-  //   role: randomRole(),
-  // },
-  // {
-  //   id: randomId(),
-  //   name: randomTraderName(),
-  //   age: 23,
-  //   joinDate: randomCreatedDate(),
-  //   role: randomRole(),
-  // },
+const initialRows = [ 
 ];
 
 function EditToolbar(props) {
@@ -108,13 +71,28 @@ export default function FullFeaturedCrudGrid() {
     }
   };
 
+  const handleRowAdd = (newRow) => {
+    // Aquí puedes realizar tu validación
+    // Por ejemplo, validar si el nuevo elemento cumple con ciertas condiciones antes de añadirlo
+
+    // Supongamos que queremos validar que el campo 'name' no esté vacío
+    if (!newRow.numero_factura_tasadora) {
+      alert('El campo numero_factura_tasadora no puede estar vacío');
+      return;
+    }
+
+    // Si pasa la validación, añadimos la nueva fila
+    setRows((prevRows) => [...prevRows, newRow]);
+  };
+
+
   const handleEditClick = (id) => () => {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
   };
 
   const handleSaveClick = (id) => () => {
-    //debugger;
-
+    
+   debugger;
 
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
   };
@@ -149,12 +127,12 @@ export default function FullFeaturedCrudGrid() {
 
   const columns = [    
      { field: 'numero_factura_tasadora', headerName: 'Factura', width: 120, editable: true
-    ,    
-    preProcessEditCellProps(params) {      
-      //debugger;
-      const invalid = params.props.value.length < 1;    
-      return { ...params.props, error: invalid }    
-    }
+    // ,    
+    // preProcessEditCellProps(params) {      
+    //   //debugger;
+    //   const invalid = params.props.value.length < 1;    
+    //   return { ...params.props, error: invalid }    
+    // }
   
   },
     {
@@ -253,7 +231,7 @@ export default function FullFeaturedCrudGrid() {
         editMode="row"
         rowModesModel={rowModesModel}
         onRowModesModelChange={handleRowModesModelChange}
-        onRowEditStop={handleRowEditStop}
+        onRowEditStop={handleRowEditStop}                
         processRowUpdate={processRowUpdate}
         slots={{
           toolbar: EditToolbar,
