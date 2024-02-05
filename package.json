@@ -9,6 +9,7 @@
     "@mui/material": "latest",
     "@mui/x-data-grid": "latest",
     "@mui/x-data-grid-generator": "latest",
+    "fast-xml-parser": "^4.3.4",
     "moment": "^2.29.4",
     "react": "latest",
     "react-dom": "latest"
