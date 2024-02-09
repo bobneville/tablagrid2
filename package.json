@@ -3,19 +3,27 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emotion/react": "latest",
-    "@emotion/styled": "latest",
-    "@mui/icons-material": "latest",
-    "@mui/material": "latest",
-    "@mui/x-data-grid": "latest",
-    "@mui/x-data-grid-generator": "latest",
-    "fast-xml-parser": "^4.3.4",
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.10.5",
+    "@material-ui/icons": "^4.11.3",
+    "@mui/icons-material": "^5.11.0",
+    "@mui/lab": "^5.0.0-alpha.110",
+    "@mui/material": "^5.11.0",
+    "@mui/x-data-grid": "^6.19.3",
+    "@mui/x-data-grid-generator": "^6.19.3",
+    "@mui/x-date-pickers": "^5.0.9",
+    "fast-xml-parser": "^4.0.12",
+    "material-table": "^2.0.5",
     "moment": "^2.29.4",
-    "react": "latest",
-    "react-dom": "latest"
+    "react": "^18.2.0",
+    "react-data-grid": "^7.0.0-canary.39",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.5.0",
+    "react-scripts": "^5.0.1",
+    "web-vitals": "^2.1.4"
   },
   "devDependencies": {
-    "react-scripts": "latest"
+    "react-scripts": "^5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

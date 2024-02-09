@@ -54,8 +54,6 @@ const Demo2 = () => {
   importe_total_factura_tasador: '', 
   total_dias_uci: '', 
   total_dias_tasadora: '', 
-
-
 });
     const dataGridRef = useRef(null);  
   const [validationErrors, setValidationErrors] = useState({
@@ -74,30 +72,7 @@ const Demo2 = () => {
     total_dias_tasadora: false,
   });  
 
-  const handleEditCellChange = (editCellChangeParams) => {
-    const { id, field, props } = editCellChangeParams;
-
-    // Validación al editar una celda
-    if (field === 'numero_factura_tasadora' && props.value === '') {
-      alert('Debe indicar el número de factura');
-      return false;
-    }
-
-    // Si la validación pasa, actualiza la fila
-    setRows((prevRows) =>
-      prevRows.map((row) =>
-        row.id === id
-          ? {
-              ...row,
-              [field]: props.value,
-            }
-          : row
-      )
-    );
-
-    return true;
-  };
-
+  
   const handleAddRow = () => {
     setOpenDialog(true);
   };
@@ -109,6 +84,12 @@ const Demo2 = () => {
     if (editRow) {
       setNewRow({ ...editRow });
     }
+    
+  };
+
+  const ver = () => {
+    console.table(rows)
+    
   };
 
   const handleDeleteRow = (id) => {
@@ -204,9 +185,9 @@ const Demo2 = () => {
             { field: 'ingreso_tasadora_neto_factura', headerName: 'Ingreso neto', type: 'number', align: 'right', width: 110, editable: true },                              
             { field: 'ingreso_tasadora_impuesto_factura', headerName: 'Impuestos', type: 'number', align: 'right', width: 110, editable: true },                              
             { field: 'ingreso_tasadora_total_factura', headerName: 'Total', type: 'number', align: 'right', width: 110, editable: true },                              
-            { field: 'estado_factura', headerName: 'Estado', width: 55, editable: true },
-            { field: 'importe_neto_factura_tasador', headerName: 'Ingreso neto tasador', type: 'number', align: 'right', width: 110, editable: true },                              
-            { field: 'importe_iva_factura_tasador', headerName: 'Impuestos tasador', type: 'number', align: 'right', width: 110, editable: true },                              
+            { field: 'estado_factura', headerName: 'Estado', width: 65, editable: true },
+            { field: 'importe_neto_factura_tasador', headerName: 'Neto tasador', type: 'number', align: 'right', width: 110, editable: true },                              
+            { field: 'importe_iva_factura_tasador', headerName: 'Imp. tasador', type: 'number', align: 'right', width: 110, editable: true },                              
             { field: 'importe_total_factura_tasador', headerName: 'Total tasador', type: 'number', align: 'right', width: 110, editable: true },                                          
             { field: 'total_dias_uci', headerName: 'Días UCI', type: 'number', align: 'right', width: 80, editable: true },                                          
             { field: 'total_dias_tasadora', headerName: 'Días tasadora', type: 'number', align: 'right', width: 100, editable: true },                                          
@@ -227,6 +208,10 @@ const Demo2 = () => {
                 >
                   Borrar
                 </Button>
+                <Button variant="outlined" onClick={() => ver()}>
+                  Ver filas
+                </Button>
+
               </div>
             ),
           },
@@ -235,14 +220,12 @@ const Demo2 = () => {
         // rowsPerPageOptions={[10, 20]}        
         disableColumnFilter
         disableColumnSort         
-        disableSelectionOnClick
-        onEditCellChange={handleEditCellChange}
+        disableSelectionOnClick        
         onCellDoubleClick={(params) => handleEditRow(params.id)}
       />
 
       <Dialog open={openDialog} onClose={handleCloseDialog} 
-            disableEscapeKeyDown
-            disableBackdropClick
+            disableEscapeKeyDown            
       >
         <DialogTitle>{editRowId ? 'Editar factura' : 'Añadir factura'}</DialogTitle>        
         <DialogContent dividers>        
@@ -276,8 +259,7 @@ const Demo2 = () => {
           />
                     
         <TextField style={styles.textField}
-            autoFocus
-            required
+            autoFocus            
             margin="dense"
             id="referencia"
             label="Referencia"
